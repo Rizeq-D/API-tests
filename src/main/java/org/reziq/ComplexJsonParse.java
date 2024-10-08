@@ -22,8 +22,13 @@ public class ComplexJsonParse {
 
         int firstCoursePrice = jsonPath.getInt("courses[0].price");
         System.out.println(firstCoursePrice);
+        System.out.println();
 
+        for (int i = 0; i<courses; i++) {
 
+            String coursesTitles = jsonPath.get("courses["+i+"].title");
+            System.out.println(coursesTitles);
+        }
 
     }
 }
