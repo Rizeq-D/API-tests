@@ -3,7 +3,6 @@ package org.reziq;
 public class HTTPMethods {
 
     public static String AddPlace() {
-
         return "{\n" +
                 "  \"location\": {\n" +
                 "    \"lat\": -38.383494,\n" +
@@ -21,8 +20,8 @@ public class HTTPMethods {
                 "  \"language\": \"French-IN\"\n" +
                 "}";
     }
-    public static String CoursePrice() {
 
+    public static String CoursePrice() {
         return "{\n" +
                 "\"dashboard\": {\n" + "\n" +
                 "\"purchaseAmount\": 910,\n" + "\n" +

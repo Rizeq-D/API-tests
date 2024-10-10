@@ -3,8 +3,6 @@ package org.reziq;
 import io.restassured.path.json.JsonPath;
 import org.testng.Assert;
 
-import java.sql.SQLOutput;
-
 public class ComplexJsonParse {
 
     public static void main(String[] args) {
