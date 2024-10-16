@@ -1,7 +1,11 @@
 package org.reziq;
 
 import io.restassured.path.json.JsonPath;
+import org.reziq.pojo.Api;
 import org.reziq.pojo.GetCourse;
+import org.reziq.pojo.WebAutomation;
+
+import java.util.List;
 
 import static io.restassured.RestAssured.given;
 
@@ -25,15 +29,28 @@ public class OAuthTesting {
         System.out.println(accessToken);
 
         GetCourse getCourse = given()
-                .param("access_token", "xekuOMjjoPwzuGfxeAOmag==")
+                .param("access_token", "i3GB8npAi4KUxVbie4tVXA==")
                 .when().log().all()
-                .get("https://rahulshettyacademy.com/oauthapi/getCourseDetails?access_token=xekuOMjjoPwzuGfxeAOmag==")
+                .get("https://rahulshettyacademy.com/oauthapi/getCourseDetails?access_token=i3GB8npAi4KUxVbie4tVXA==")
                         .as(GetCourse.class);
 
-        System.out.println(getCourse.getCourses());
         System.out.println(getCourse.getInstructor());
         System.out.println(getCourse.getLinkedIn());
-        
+        System.out.println(getCourse.getCourses().getApi().get(1).getCourseTitle());
+
+        List<Api> apiCourses = getCourse.getCourses().getApi();
+
+        for (int i = 0; i < apiCourses.size(); i++) {
+            if (apiCourses.get(i).getCourseTitle()
+                    .equalsIgnoreCase("soapUI Webservices testing")) {
+                System.out.println(apiCourses.get(i).getPrice());
+
+            }
+        }
+        List<WebAutomation> webAutomationList = getCourse.getCourses().getWebAutomation();
+        for (int j = 0; j < webAutomationList.size(); j++) {
+            System.out.println(webAutomationList.get(j).getCourseTitle());
+        }
     }
 }
 

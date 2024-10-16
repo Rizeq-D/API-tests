@@ -1,5 +1,9 @@
 package org.reziq.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+
 public class GetCourse {
 
     private String url;
