@@ -1,9 +1,7 @@
 package org.reziq;
 
-
 import io.restassured.path.json.JsonPath;
-
-import java.sql.SQLOutput;
+import org.reziq.pojo.GetCourse;
 
 import static io.restassured.RestAssured.given;
 
@@ -26,13 +24,15 @@ public class OAuthTesting {
         String accessToken = jsonPath.getString("access_token");
         System.out.println(accessToken);
 
-        String responseGet = given()
-                .param("access_token", "NqG79vjTl9nENeFatNjxNw==")
+        GetCourse getCourse = given()
+                .param("access_token", "xekuOMjjoPwzuGfxeAOmag==")
                 .when().log().all()
-                .get("https://rahulshettyacademy.com/oauthapi/getCourseDetails?access_token=NqG79vjTl9nENeFatNjxNw==")
-                .asString();
+                .get("https://rahulshettyacademy.com/oauthapi/getCourseDetails?access_token=xekuOMjjoPwzuGfxeAOmag==")
+                        .as(GetCourse.class);
 
-        System.out.println(responseGet);
+        System.out.println(getCourse.getCourses());
+        System.out.println(getCourse.getInstructor());
+        System.out.println(getCourse.getLinkedIn());
         
     }
 }

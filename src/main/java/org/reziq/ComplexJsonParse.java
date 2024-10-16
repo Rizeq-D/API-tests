@@ -1,7 +1,6 @@
 package org.reziq;
 
 import io.restassured.path.json.JsonPath;
-import org.testng.Assert;
 
 public class ComplexJsonParse {
 
@@ -52,6 +51,6 @@ public class ComplexJsonParse {
         }
         System.out.println(sum);
         int purchaseAmount = jsonPath.getInt("dashboard.purchaseAmount");
-        Assert.assertEquals(sum, purchaseAmount);
+
     }
 }

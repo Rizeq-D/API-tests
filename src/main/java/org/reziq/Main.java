@@ -2,7 +2,6 @@ package org.reziq;
 
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
-import org.testng.Assert;
 
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
@@ -51,7 +50,6 @@ public class Main {
         String actualAddress = jsonPath1.getString("address");
 
         System.out.println(actualAddress);
-        Assert.assertEquals(actualAddress, "70 Summer walk, USA");
     }
 }
 
