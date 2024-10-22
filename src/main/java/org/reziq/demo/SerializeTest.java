@@ -1,7 +1,12 @@
 package org.reziq.demo;
 
 import io.restassured.RestAssured;
+import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.builder.ResponseSpecBuilder;
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
+import io.restassured.specification.ResponseSpecification;
 import org.reziq.pojo.AddPlace;
 import org.reziq.pojo.Location;
 import java.util.ArrayList;
@@ -31,13 +36,21 @@ public class SerializeTest {
         location.setLat(33.427362);
         addPlace.setLocation(location);
 
-        Response res = given().log().all().queryParam("key", "qaclick123")
-                .body(addPlace)
-                .when().post("/maps/api/place/add/json")
-                .then().assertThat().statusCode(200)
-                .extract().response();
+        RequestSpecification requestSpecification = new RequestSpecBuilder()
+                .setBaseUri("https://rahulshettyacademy.com")
+                .addQueryParam("key", "qaclick123")
+                .setContentType(ContentType.JSON).build();
 
-        String responseString = res.asString();
+        ResponseSpecification responseSpecification = new ResponseSpecBuilder()
+                .expectStatusCode(200)
+                .expectContentType(ContentType.JSON).build();
+
+        RequestSpecification res = given().spec(requestSpecification).body(addPlace);
+
+        Response response = res.when().post("/maps/api/place/add/json")
+                .then().spec(responseSpecification).extract().response();
+
+        String responseString = response.asString();
         System.out.println(responseString);
 
     }
