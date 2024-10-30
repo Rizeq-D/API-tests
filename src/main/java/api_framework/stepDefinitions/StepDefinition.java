@@ -1,5 +1,6 @@
 package api_framework.stepDefinitions;
 
+import io.cucumber.java.PendingException;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -7,6 +8,7 @@ import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.http.ContentType;
+import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
@@ -17,8 +19,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
+import static org.junit.Assert.assertEquals;
 
 public class StepDefinition {
+
+    RequestSpecification res;
+    ResponseSpecification responseSpecification;
+    RequestSpecification requestSpecification;
+    Response response;
 
     @Given("Add Place Payload")
     public void add_place_payload() {
@@ -42,44 +50,54 @@ public class StepDefinition {
         location.setLat(33.427362);
         addPlace.setLocation(location);
 
-        RequestSpecification requestSpecification = new RequestSpecBuilder()
+         requestSpecification = new RequestSpecBuilder()
                 .setBaseUri("https://rahulshettyacademy.com")
                 .addQueryParam("key", "qaclick123")
                 .setContentType(ContentType.JSON).build();
 
-        ResponseSpecification responseSpecification = new ResponseSpecBuilder()
+        responseSpecification = new ResponseSpecBuilder()
                 .expectStatusCode(200)
                 .expectContentType(ContentType.JSON).build();
 
-        RequestSpecification res = given().spec(requestSpecification).body(addPlace);
+        res = given().spec(requestSpecification).body(addPlace);
 
-        Response response = res.when().post("/maps/api/place/add/json")
-                .then().spec(responseSpecification).extract().response();
 
-        String responseString = response.asString();
-        System.out.println(responseString);
-
-        throw new io.cucumber.java.PendingException();
     }
     @When("user calls {string} with Post http request")
     public void user_calls_with_post_http_request(String string) {
         // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+        response = res.when().post("/maps/api/place/add/json")
+                .then().spec(responseSpecification).extract().response();
     }
     @Then("the API call got success with status code {int}")
     public void the_api_call_got_success_with_status_code(Integer int1) {
         // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+        assertEquals(response.getStatusCode(), 200);
     }
     @Then("{string} in response body is OK")
-    public void in_response_body_is_ok(String string) {
+    public void in_response_body_is_ok(String KeyValue, String ExpectedValue) {
         // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+        String responseString = response.asString();
+        JsonPath jsonPath = new JsonPath(responseString);
+        assertEquals(jsonPath.get(KeyValue).toString(), ExpectedValue);
     }
-    @Then("{string} in response body is {string}")
-    public void in_response_body_is(String string, String string2) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
-    }
-
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
