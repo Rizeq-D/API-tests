@@ -13,6 +13,8 @@ import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 import org.reziq.pojo.AddPlace;
 
+import java.io.FileNotFoundException;
+
 import static io.restassured.RestAssured.given;
 import static org.junit.Assert.assertEquals;
 
@@ -24,7 +26,7 @@ public class StepDefinition extends Utils {
     TestDataBuild testDataBuild = new TestDataBuild();
 
     @Given("Add Place Payload")
-    public void add_place_payload() {
+    public void add_place_payload() throws FileNotFoundException {
 
         responseSpecification = new ResponseSpecBuilder()
                 .expectStatusCode(200)
