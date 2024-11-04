@@ -6,7 +6,7 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(features = "/Users/rizeq/Desktop/Asured_maven_project" +
-        "/src/main/java/api_framework/features/placeValidations.feature",
-        glue = {"stepDefinattions"})
+        "/src/main/java/api_framework/features",
+        glue = {"api_framework.stepDefinitions"})
 public class TestRunner {
 }
